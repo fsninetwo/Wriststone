@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Category";
+    Layout = "~/Views/Layout.cshtml";
+}
+@model Wriststone.Models.ViewModel.ProductRatingModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<h2>Ratings</h2>
+@if (Model.Ratings.Count() > 0)
+{
+    foreach (var item in Model.Ratings)
+    {
+        <div class="ratings">
+            <div class="profile">
+                <a href="/Profile/Profile/@item.Account.Login">@item.Account.Login</a>
+                <img src="/images/avatars/@item.Account.Login.ToLower()/@item.Account.Avatar" />
+            </div>
+            <div class="context">
+                <ul>
+                    <li>@localizer["Rank:"] @item.Rating.Rate</li>
+                    <li>@localizer["Message:"] @item.Rating.Message</li>
+                </ul>
+            </div>
+        </div>
+    }
+}
+@if (Model.Pages > 0)
+{
+<div class="page">
+    <p>@localizer["Pages"]</p>
+    <ul>
+        @for (int i = 0; i <= Model.Pages; i++)
+        {
+            if (Model.Page == i)
+            {
+                <li><button>@i</button></li>
+            }
+            else if ((i <= Model.Page + 2 && i >= Model.Page - 2) || i == 0 || i == Model.Pages)
+            {
+                <li>
+                    <form method="get" action="/Store/Ratings/@Model.RatingId">
+                        <input type="submit" name="page" value="@i">
+                    </form>
+                </li>
+            }
+        }
+    </ul>
+</div>
+}

@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "NotFound";
+    Layout = "~/Views/Layout.cshtml";
+}
+
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<h1>@localizer["Oops! This page is not found!"]</h1>
+

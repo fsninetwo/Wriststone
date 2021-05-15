@@ -1,0 +1,116 @@
+﻿@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Layout.cshtml";
+
+}
+
+@model Wriststone.Models.ViewModel.ProductModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<div class="product">
+    <h2>@Model.Product.Product.Name</h2>
+    <div class="product_info">
+        <img src="\images\products\@Model.Product.Product.Name.ToLower()\@Model.Product.Product.Icon" />
+    </div>
+    <div class="product_creditals">
+        <ul>
+            <li>@Model.Product.Product.Description</li>
+            <li>@localizer["Rublisher:"] @Model.Product.Product.Publisher </li>
+            <li>@localizer["Developer:"] @Model.Product.Product.Developer </li>
+            <li>
+                @localizer["Rating:"] @Model.Rate
+            </li>
+            @if (Model.Product.ProductCurrency != null)
+            {
+                @if (Model.Product.ProductCurrency.Price > 0)
+                {
+                    <li>Price: @Model.Product.ProductCurrency.Price @Model.Product.Currency.Symbol</li>
+                }
+                else
+                {
+                    <li>@localizer["Free"]</li>
+                }
+            }
+            else
+            {
+                <li>@localizer["This product is not avaliable in your region."]</li>
+            }
+        </ul>
+    </div>
+</div>
+@if (User.Identity.Name != null)
+{
+
+    <div class="buy">
+        @if (Model.Product.ProductCurrency != null)
+        {
+            @if (Model.Bought == false)
+            {
+                if (Model.Product.ProductCurrency.Price > 0)
+                {
+                    <button type="button" onclick="window.location='/Store/Cart/@Model.Product.Product.Id'">Add to cart</button>
+                }
+                else
+                {
+                    <form method="post" action="/Cart/FreeProduct">
+                        <input type="hidden" name="id" value="@Model.Product.Product.Id">
+                        <input type="submit" value="Buy for free" />
+                    </form>
+                }
+            }
+            else
+            {
+                <strong>@localizer["This product is already bought!"]</strong>
+            }
+        }
+        else
+        {
+            <strong>@localizer["This product is not avaliable in your region."]</strong>
+        }
+    </div>
+    <form class="rate" method="post" action="/Store/Rate">
+        <h2>@localizer["Rate this product."]</h2>
+        <div class="profile">
+            <a href="/Profile/Profile/@Model.Account.Login">@Model.Account.Login</a>
+            <img src="@Model.Account.Avatar" />
+        </div>
+        <div class="rank">
+            <input type="hidden" name="product" value="@Model.Product.Product.Id">
+            <p>
+                @localizer["Rate:"]
+                <select name="rank">
+                    @for (int i = 1; i <= 10; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </p>
+            <p> <textarea name="comment" cols="70" rows="5" required></textarea> </p>
+            <p> <input type="submit" value="Rate" /> </p>
+        </div>
+    </form>
+}
+
+
+@if (Model.Ratings.Count() > 0)
+{
+    <div class="ratings">
+        <h2>@localizer["Ratings"]</h2>
+        @foreach (var item in Model.Ratings)
+        {
+
+            <div class="profile">
+                <a href="/Profile/Profile/@item.Account.Login">@item.Account.Login</a>
+                <img src="/images/avatars/@item.Account.Login.ToLower()/@item.Account.Avatar" />
+            </div>
+            <div class="context">
+                <ul>
+                    <li>@localizer["Rank:"] @item.Rating.Rate</li>
+                    <li>@localizer["Message:"] @item.Rating.Message</li>
+                </ul>
+            </div>
+        }
+    </div>
+    <button type="button" onclick="window.location='/Store/Ratings/@Model.Product.Product.Id'">@localizer["See all ratings"]</button>
+}
+

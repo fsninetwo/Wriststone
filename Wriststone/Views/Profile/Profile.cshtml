@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Layout.cshtml";
+    ViewBag.Title = "Profile";
+}
+
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+@if (User.Identity.Name != null)
+    if(User.Identity.Name.Equals(ViewBag.User))
+    {
+        <div class="profile_menu">
+            <ul>
+                <li class="active"><a>@localizer["Profile"]</a></li>
+                <li><a href="/Profile/Products">@localizer["Products"]</a></li>
+                <li><a href="/Profile/Orders">@localizer["Orders"]</a></li>
+                <li><a href="/Profile/Edit">@localizer["Edit profile"]</a></li>
+            </ul>
+        </div>
+    }
+
+    <div class="profile_user">
+        <div class="profile_creditals">
+            <h2>@Model.Login</h2>
+            <img src="/images/avatars/@Model.Login.ToLower()/@Model.Avatar">
+        </div>
+        <div class="profile_info">
+            <h2>Info</h2>
+            <ul>
+                <li>@localizer["Full Name:"] @Model.Fullname</li>
+                <li>@localizer["Email:"] @Model.Email</li>
+                <li>@localizer["Creation Date:"] @Model.Created.ToString("dd/MM/yyyy")</li>
+                <li>@localizer["Addictional Info:"]</li>
+                <li></li>
+            </ul>
+        </div>
+    </div>

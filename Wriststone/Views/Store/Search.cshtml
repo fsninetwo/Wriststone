@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Layout.cshtml";
+
+}
+@model Wriststone.Models.ViewModel.CategoryProductsModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+
+<div class="search">
+    <form method="get" action="/Store/Search">
+        <input type="text" placeholder="Search" name="search" value="@ViewData["Search"]">
+        <button type="submit">Go</button>
+    </form>
+</div>
+<div class="products">
+    <ul>
+        <li class="title">
+            <div class="name">@localizer["Product"]</div>
+            <div class="downloads">@localizer["Downloads"]</div>
+            <div class="rating">@localizer["Rating"]</div>
+            <div class="price">@localizer["Price"]</div>
+        </li>
+        @foreach (var item in Model.Products)
+        {
+            <li>
+                <div class="name"><a href="/Store/Product/@item.Product.Id">@item.Product.Name</a></div>
+                <div class="downloads">@item.Downloads</div>
+                <div class="rating"><a href="/Store/Ratings/@item.Product.Id">@item.Rating</a></div>
+                @if (item.ProductCurrency.Price > 0)
+                {
+                    <div class="price">@item.ProductCurrency.Price @item.Currency.Symbol</div>
+                }
+                else
+                {
+                    <div class="price">@localizer["Free"]</div>
+                }
+            </li>
+        }
+    </ul>
+</div>
+@if (Model.Pages > 0)
+{   
+<div class="page">
+    <p>@localizer["Pages"]</p>
+    <ul>
+        @for (int i = 0; i <= Model.Pages; i++)
+        {
+            if (Model.Page == i)
+            {
+                <li><button>@i</button></li>
+            }
+            else if ((i <= Model.Page + 2 && i >= Model.Page - 2) || i == 0 || i == Model.Pages)
+            {
+                <li>
+                    <form method="get" action="/Store/Search">
+                        <input type="hidden" name="search" value="@Model.Search">
+                        <input type="submit" name="page" value="@i">
+                    </form>
+                </li>
+            }
+        }
+    </ul>
+</div>
+}

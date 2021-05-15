@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Layout.cshtml";
+    var emailregex = "[\\w]+@[\\w]+\\.[\\w]+";
+}
+@model Wriststone.Models.Table.Account
+    <div class="log">
+        <h1>Register</h1>
+        <p>Please fill in this form to edit an account.</p>
+        <form method="post" action="/Profile/Edit" autocomplete="off" enctype="multipart/form-data">
+            <input type="hidden" name="id" value="@Model.Login" />
+            <input type="file" name="file" accept="image/jpeg, image/png, image/gif">
+            <input type="text" placeholder="Enter email" name="email" value="@Model.Email" pattern="@emailregex" autocomplete="off">
+            <input type="password" placeholder="Enter password" autocomplete="off" name="password" >
+            <input type="text" placeholder="Enter fullname" name="fullname" value="@Model.Fullname" autocomplete="off">
+            <input type="submit" value="Edit" />
+        </form>
+        <form action="/Profile/Profile/@Model.Login">
+            <input type="submit" value="Cancel" />
+        </form>
+    </div>
+

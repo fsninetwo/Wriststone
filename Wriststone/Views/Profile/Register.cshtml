@@ -1,0 +1,25 @@
+﻿@{
+
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Layout.cshtml";
+    //pattern="@RegexData.Email"
+    //pattern = "@RegexData.Password"
+}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<div class="log">
+    <h1>@localizer["Register"]</h1>
+    <p>@localizer["Please fill in this form to create an account."]</p>
+    <form method="post" action="/Profile/Register" autocomplete="off">
+        @if (ViewData["error"] != null)
+        {
+            <span>@ViewData["error"]</span>
+        }
+        <input type="text" placeholder="Enter login" name="login"  required>
+        <input type="text" placeholder="Enter email" name="email" required>
+        <input type="password" placeholder="Enter password" name="password" required>
+        <input type="text" placeholder="Enter fullname" name="fullname">
+        <input type="submit" value="Register" />
+    </form>
+</div>
+

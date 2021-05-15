@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Layout.cshtml";
+}
+@model IEnumerable<Wriststone.Models.ViewModel.AccountOrderModel>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+@if (User.Identity.Name != null)
+{
+    <div class="profile_menu">
+        <ul>
+            <li><a href="/Profile/Profile/@User.Identity.Name">@localizer["Profile"]</a></li>
+            <li><a a href="/Profile/Products">@localizer["Products"]</a></li>
+            <li class="active"><a>Orders</a></li>
+            <li><a href="/Profile/Edit">@localizer["Edit profile"]</a></li>
+        </ul>
+    </div>
+}
+
+    <div class="orders">
+        <h2>Bought products</h2>
+        <ul>
+            <li class="title">
+                <div class="order">Order</div>
+                <div class="price">Cost</div>
+                <div class="time">Time</div>
+            </li>
+            @foreach (var item in Model)
+            {
+                <li>
+                    <div class="order"><a href="/Profile/Order/@item.Order.Id">@item.Order.Guid</a> </div>
+                    <div class="price"> @item.Order.Price @item.Currency.Symbol</div>
+                    <div class="time"> @item.Order.Date.Value.ToString("dd/MM/yyyy")</div>
+                </li>
+            }
+        </ul>
+    </div>
+

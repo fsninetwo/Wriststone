@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Thread";
+    Layout = "~/Views/Layout.cshtml";
+}
+@model Wriststone.Models.ViewModel.ThreadPostsModel
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<div class="thread_list">
+    <h2>@Model.Thread.Subject</h2>
+    @if (User.Identity.Name != null && User.Identity.Name.Equals(Model.Creator.Login))
+    {
+        <div class="panel">
+            <form method="get" action="/Forum/Edit">
+                <input type="hidden" name="threadid" value="@Model.Thread.Id">
+                <input type="hidden" name="postid" value="@Model.Post">
+                <input type="submit" value="Edit Thread">
+            </form>
+        </div>
+    }
+    @foreach (var item in Model.Posts)
+    {
+        <div class="post">
+            <div class="created">@item.Post.ThreadOrder, @item.Post.Created.Value.ToString("dd/MM/yyyy, hh:mm")</div>
+            <div class="profile">
+                <a href="/Profile/Profile/@item.Account.Login">@item.Account.Login</a>
+                <img src="/images/avatars/@item.Account.Login.ToLower()/@item.Account.Avatar" />
+            </div>
+            <div class="context">@item.Post.Context</div>
+        </div>
+    }
+    @if (@User.Identity.Name != null)
+    {
+        <div class="panel">
+            <form method="post" action="/Forum/Post">
+                <input type="hidden" name="thread" value="@Model.Thread.Id">
+                <textarea name="context" rows="5" required></textarea>
+                <input type="submit" value="Post">
+            </form>
+        </div>
+    }
+</div>
+@if (Model.Pages > 0)
+{
+<div class="page">
+    <p>@localizer["Pages"]</p>
+    <ul>
+        @for (int i = 0; i <= Model.Pages; i++)
+        {
+            if (Model.Page == i)
+            {
+                <li><button>@i</button></li>
+            }
+            else if ((i <= Model.Page + 2 && i >= Model.Page - 2) || i == 0 || i == Model.Pages - 1)
+            {
+                <li>
+                    <form method="get" action="/Forum/Thread/@Model.Thread.Id">
+                        <input type="submit" name="page" value="@i">
+                    </form>
+                </li>
+            }
+        }
+    </ul>
+</div>
+}
+

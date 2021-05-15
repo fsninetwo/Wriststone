@@ -1,0 +1,47 @@
+﻿@using Wriststone.Static_Methods;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+@{
+    ViewBag.Title = "Cart";
+    Layout = "~/Views/Layout.cshtml";
+    var cart = HttpContextAccessor.HttpContext.Session.Get<List<Wriststone.Models.ViewModel.ProductCartModel>>("cart");
+    string total = "";
+    string currency = "";
+    try
+    {
+        total = String.Format("{0}", cart.Sum(e => e.ProductCurrency?.Price));
+        currency = cart.First().Currency?.Symbol;
+    }
+    catch (ArgumentNullException) { }
+
+}
+
+@if (HttpContextAccessor.HttpContext.Session.Get<List<Wriststone.Models.ViewModel.ProductCartModel>>("cart") != null)
+{
+    <div class="list">
+        <h2>@localizer["Your order"]</h2>
+        <ul>
+            @foreach (var item in HttpContextAccessor.HttpContext.Session.Get<List<Wriststone.Models.ViewModel.ProductCartModel>>("cart"))
+            {
+                <li>
+                    @item.Product.Name @item.ProductCurrency.Price @item.Currency.Symbol
+                    <form method="post" class="cart" action="/Cart/Delete">
+                        <input type="hidden" name="id" value="@item.Product.Id">
+                        <input type="submit" value="Delete" />
+                    </form>
+                </li>
+            }
+        <li>@localizer["Overall price:"] @total @currency</li>
+        </ul>
+        <button type="button" class="cart" onclick="window.location='/Cart/PaymentWithPaypal'">@localizer["Purchase with Paypal"]</button>
+    </div>
+
+}
+else
+{
+    <div class="list">
+        <h2>@localizer["You have no products in order"]</h2>
+    </div>
+}
+
+

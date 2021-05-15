@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Layout.cshtml";
+    ViewBag.Title = "Forum";
+}
+@model IEnumerable<Wriststone.Models.Table.ForumCategory>
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<div class="search">
+    <form method="get" action="/Forum/Search">
+        <input type="text" placeholder="Search" name="search">
+        <button type="submit">Go</button>
+    </form>
+</div>
+<div class="list">
+    <h2>@localizer["Categories"]</h2>
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li><a href="/Forum/Category/@item.Id">@item.Name</a></li>
+        }
+    </ul>
+</div>

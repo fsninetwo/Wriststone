@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Recovery";
+    Layout = "~/Views/Layout.cshtml";
+}
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<div class="log">
+    <h1>@localizer["Recover"]</h1>
+    <p>@localizer["Please fill in this form to enter account."]</p>
+    <form method="post" action="/Profile/Recovery">
+        @if (ViewData["error"] != null)
+        {
+            <span>@ViewData["error"]</span>
+        }
+        <input type="text" placeholder="Enter Email" name="email" autocomplete="off" required>
+        <input type="password" placeholder="Enter password" name="password" autocomplete="off" required>
+        <input type="password" placeholder="Confirm password" name="confirmpassword" autocomplete="off" required>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+

@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wriststone", "Wriststone\Wriststone.csproj", "{CB69E255-04DD-49DF-80DE-9E7892D8C462}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayPalCore", "PayPalCore\PayPalCore-master\src\PayPalCore.csproj", "{ED25CED0-674E-4734-BBA9-8EF6F7A82203}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WriststoneTestUnit", "WriststoneTestUnit\WriststoneTestUnit.csproj", "{58FB22A3-116A-4417-B568-209F89BD93D1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB69E255-04DD-49DF-80DE-9E7892D8C462}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB69E255-04DD-49DF-80DE-9E7892D8C462}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB69E255-04DD-49DF-80DE-9E7892D8C462}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB69E255-04DD-49DF-80DE-9E7892D8C462}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED25CED0-674E-4734-BBA9-8EF6F7A82203}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED25CED0-674E-4734-BBA9-8EF6F7A82203}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED25CED0-674E-4734-BBA9-8EF6F7A82203}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED25CED0-674E-4734-BBA9-8EF6F7A82203}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58FB22A3-116A-4417-B568-209F89BD93D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58FB22A3-116A-4417-B568-209F89BD93D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58FB22A3-116A-4417-B568-209F89BD93D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58FB22A3-116A-4417-B568-209F89BD93D1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DDE7895-C69C-4D63-AC2A-0BD713E39176}
+	EndGlobalSection
+EndGlobal

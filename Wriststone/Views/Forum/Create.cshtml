@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Layout.cshtml";
+}
+@model Wriststone.Models.Table.ForumCategory
+@inject Microsoft.AspNetCore.Mvc.Localization.IViewLocalizer localizer;
+
+<div class="thread">
+    <h2>@localizer["Create thread under category"] @Model.Name.</h2>
+    <form method="post" action="/Forum/Create">
+        <input type="hidden" name="category" value="@Model.Id">
+        <input type="text" name="subject" placeholder="Create thread name." autocomplete="off" required>
+        <textarea name="context" rows="5" placeholder="Write a context" required></textarea>
+        <input type="submit" value="Create Thread">
+        <button type="button" onclick="window.location='/Profile/Category/@Model.Id'">Cancel</button>
+    </form>
+</div>
+

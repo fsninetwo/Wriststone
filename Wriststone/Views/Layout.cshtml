@@ -1,0 +1,85 @@
+﻿@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.Extensions.Options
+
+@inject IViewLocalizer localizer
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@{
+    var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+    var cultureItems = LocOptions.Value.SupportedUICultures
+        .Select(c => new SelectListItem { Value = c.Name, Text = localizer.GetString(c.Name) })
+        .ToList();
+    var returnUrl = string.IsNullOrEmpty(Context.Request.Path) ? "~/" : $"~{Context.Request.Path.Value}{Context.Request.QueryString}";
+}
+
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/css/styles.css" type="text/css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="navigator">
+            <div class="top">
+                <ul>
+                    <li><a href="/">Store</a></li>
+                    <li><a href="/Forum/Forum">Forum</a></li>
+                    @if (User.Identity.Name != null)
+                    {
+                        <li> <a href="/Profile/Profile/@User.Identity?.Name"> Profile </a> </li>
+                    }
+                    <li><button type="button" onclick="window.location='/Cart/Cart'">Cart</button></li>
+                    @if (User.Identity.Name != null)
+                    {
+                        <li><button type="button" onclick="window.location='/Profile/Logout'">Logout</button></li>
+                    }
+                    else
+                    {
+                        <li><button type="button" onclick="window.location='/Profile/SignUp'">Sign Up</button></li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div id="content">
+            @RenderBody()
+        </div>
+        <div id="footer">
+            <div id="sitemap">
+                <h3>SITEMAP</h3>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/About">About</a></li>
+                    <li><a href="/Services">Services</a></li>
+                    <li><a href="/Partners">Partners</a></li>
+                    <li><a href="/Support">Support</a></li>
+                    <li><a href="/Contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--<div class="language">
+                <form method="post" action="/Locale/ChangeLocale">
+                    <input type="hidden" name="redirect" value="@returnUrl" />
+                    <select name="language" onchange="this.form.submit();">
+                        @foreach (var item in cultureItems)
+                        {
+                            if (item.Value.Equals(requestCulture.RequestCulture.UICulture.Name))
+                            {
+                                <option value="@item.Value" selected>@item.Text</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        }
+                    </select>
+                </form>
+            </div>-->
+            <div id="footer-logo">
+                <p>Copyright © 2020 - @DateTime.Now.Year.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
